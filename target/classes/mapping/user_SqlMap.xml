@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="user" >
+	<resultMap id="UserResult" class="models.User">
+		<result property="id" column="ID"/>
+		<result property="name" column="NAME"/>
+		<result property="pass" column="PASS"/>
+		<result property="type" column="TYPE"/>
+	</resultMap>
+	
+	<select id="getUser" resultClass="models.User" parameterClass="models.User">
+	 	select ID as id, TRIM(name) as name, TRIM(pass) as pass, Type as type from Users where TRIM(name)=#name#
+	</select>
+	<select id="getAll" resultClass="models.User">
+	 	select A.* from Users A 
+	</select>
+	<statement id="addUser" parameterClass="models.User" resultClass="decimal">
+	 	insert into Users (NAME, PASS, TYPE)
+		VALUES (#name#, #pass#, #type#)
+	</statement>
+	<delete id="deleteUser" parameterClass="String" >
+		DELETE FROM Users WHERE Name = #name#
+	</delete>
+	<update id="updateUser" parameterClass="models.User" >
+		UPDATE Users SET NAME = #name#, TYPE = #type# WHERE ID = #id#
+	</update>
+</sqlMap>

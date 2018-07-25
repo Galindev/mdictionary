@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig
+  PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+  "sql-map-config.dtd">
+
+<sqlMapConfig>
+	<settings useStatementNamespaces="true" />
+
+	<transactionManager type="JDBC" commitRequired="false" >
+		<dataSource type="SIMPLE">
+			<property name="Pool.TimeToWait" value="5000" />
+			<property name="Pool.PingQuery" value="select 0" />
+			<property name="Pool.PingEnabled" value="true" />
+			<property name="Pool.PingConnectionsOlderThan" value="600000" />
+			<property name="Pool.PingConnectionsNotUsedFor" value="600000" />	
+			
+			<property name="JDBC.Driver" value="oracle.jdbc.driver.OracleDriver"/>
+			<property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@localhost:1521:mlocal" /> 
+			<property name="JDBC.Username" value="galia" />
+			<property name="JDBC.Password" value="galia" /> 
+			    
+		</dataSource>
+	</transactionManager>
+	
+	<sqlMap resource="mapping/user_SqlMap.xml"/>
+</sqlMapConfig>
