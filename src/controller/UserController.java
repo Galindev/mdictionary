@@ -40,7 +40,7 @@ public class UserController {
 					result.setResultItem(loginId);
 					result.setResultMessage(loginId + " хэрэглэгчийн нууц үг буруу байна.");
 				}
-				return result;	
+				return result;
 			}
 			else {
 				result.setResultId(EResultId.valueOf(EResultId.Warning.toString()).ordinal());
