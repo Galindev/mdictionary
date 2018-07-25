@@ -6,6 +6,10 @@ public class Employee {
 	private String address;
 	private String description;
 	
+	public Employee() {
+		super();
+	}
+
 	public Employee(int id, String name, String address, String description) {
 		super();
 		this.id = id;

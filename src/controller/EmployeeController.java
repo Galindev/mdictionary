@@ -37,7 +37,7 @@ public class EmployeeController {
 				return emp;
 		}
 		
-		return null;
+		return new Employee();
 	}
 	
 	private List<Employee> employees(){
