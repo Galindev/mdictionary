@@ -15,7 +15,7 @@
 			<property name="Pool.PingConnectionsNotUsedFor" value="600000" />	
 			
 			<property name="JDBC.Driver" value="oracle.jdbc.driver.OracleDriver"/>
-			<property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@localhost:1521:mlocal" /> 
+			<property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@172.18.1.28:1521:mlocal" /> 
 			<property name="JDBC.Username" value="galia" />
 			<property name="JDBC.Password" value="galia" /> 
 			    
