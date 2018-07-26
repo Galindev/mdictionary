@@ -23,4 +23,5 @@
 	</transactionManager>
 	
 	<sqlMap resource="mapping/user_SqlMap.xml"/>
+	<sqlMap resource="mapping/dictionary_SqlMap.xml"/>
 </sqlMapConfig>

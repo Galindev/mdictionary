@@ -10,14 +10,14 @@
 	</resultMap>
 	
 	<select id="getUser" resultClass="models.User" parameterClass="models.User">
-	 	select ID as id, TRIM(name) as name, TRIM(pass) as pass, Type as type from Users where TRIM(name)=#name#
+	 	select * from Users where TRIM(name)=#name#
 	</select>
 	<select id="getAll" resultClass="models.User">
 	 	select A.* from Users A 
 	</select>
 	<statement id="addUser" parameterClass="models.User" resultClass="decimal">
-	 	insert into Users (NAME, PASS, TYPE)
-		VALUES (#name#, #pass#, #type#)
+	 	insert into Users (NAME, PHONE, EMAIL, REGISTERDATE, PROFILE, PASS, TYPE)
+		VALUES (#name#, #phone#, #email#, #registerDate#, #profile#, #pass#, #type#)
 	</statement>
 	<delete id="deleteUser" parameterClass="String" >
 		DELETE FROM Users WHERE Name = #name#
