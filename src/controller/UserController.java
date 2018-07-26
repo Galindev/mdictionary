@@ -20,37 +20,39 @@ import models.User;
 @RestController
 public class UserController {
 
-	@RequestMapping(value = "/getUser/{loginId}/{loginPass}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result login(@PathVariable String loginId, @PathVariable String loginPass)
+	@RequestMapping(value = "/loginUser", method = RequestMethod.POST)
+	public Result login(@RequestBody User userTmp)
 	{
 		Result result = new Result();
 		try {
+			String loginPass = userTmp.getPass();
+			String loginId = userTmp.getName();
 			User user = base.GetLoginUser(loginId);
 			if(user != null) {
 				if(user.getPass().equals(loginPass))
 				{
-					result.setResultId(EResultId.valueOf(EResultId.Success.toString()).ordinal());
-					result.setResultItem(user);
-					result.setResultMessage(loginId + " амжилттай нэвтэрлээ.");
+					result.setId(EResultId.valueOf(EResultId.Success.toString()).ordinal());
+					result.setItem(user);
+					result.setMessage(loginId + " амжилттай нэвтэрлээ.");
 				}
 				else
 				{
-					result.setResultId(EResultId.valueOf(EResultId.Warning.toString()).ordinal());
-					result.setResultItem(loginId);
-					result.setResultMessage(loginId + " хэрэглэгчийн нууц үг буруу байна.");
+					result.setId(EResultId.valueOf(EResultId.Warning.toString()).ordinal());
+					result.setItem(loginId);
+					result.setMessage(loginId + " хэрэглэгчийн нууц үг буруу байна.");
 				}
 				return result;
 			}
 			else {
-				result.setResultId(EResultId.valueOf(EResultId.Warning.toString()).ordinal());
-				result.setResultItem(loginId);
-				result.setResultMessage(loginId + " хэрэглэгч бүртгэлгүй байна.");
+				result.setId(EResultId.valueOf(EResultId.Warning.toString()).ordinal());
+				result.setItem(loginId);
+				result.setMessage(loginId + " хэрэглэгч бүртгэлгүй байна.");
 				return result;
 			}
 		} catch (Exception e) {
-			result.setResultId(EResultId.valueOf(EResultId.Error.toString()).ordinal());
-			result.setResultItem(loginId);
-			result.setResultMessage(SystemConst.ERROR_READ_DATA + e.getMessage());
+			result.setId(EResultId.valueOf(EResultId.Error.toString()).ordinal());
+			result.setItem("");
+			result.setMessage(SystemConst.ERROR_READ_DATA + e.getMessage());
 			return result;
 		}
 	}
@@ -66,15 +68,15 @@ public class UserController {
 		try {
 			List<User> users = (List<User>)DBManager.queryForList("user.getAll", null);
 			if(users != null)
-				result.setResultItem(users);
-			else result.setResultItem(new ArrayList<User>());
-			result.setResultId(EResultId.valueOf(EResultId.Success.toString()).ordinal());
-			result.setResultMessage(SystemConst.SUCCESS_READ_DATA);
+				result.setItem(users);
+			else result.setItem(new ArrayList<User>());
+			result.setId(EResultId.valueOf(EResultId.Success.toString()).ordinal());
+			result.setMessage(SystemConst.SUCCESS_READ_DATA);
 			return result;
 		} catch (Exception e) {
-			result.setResultId(EResultId.valueOf(EResultId.Error.toString()).ordinal());
-			result.setResultItem("");
-			result.setResultMessage(SystemConst.ERROR_READ_DATA + e.getMessage());
+			result.setId(EResultId.valueOf(EResultId.Error.toString()).ordinal());
+			result.setItem("");
+			result.setMessage(SystemConst.ERROR_READ_DATA + e.getMessage());
 			return result;
 		}
 	}
@@ -96,30 +98,30 @@ public class UserController {
 				message+=(message.equals("") ? "" : ", ") + "төрөл ";
 			if(!message.equals(""))
 			{
-				result.setResultId(EResultId.valueOf(EResultId.Warning.toString()).ordinal());
-				result.setResultItem(user);
+				result.setId(EResultId.valueOf(EResultId.Warning.toString()).ordinal());
+				result.setItem(user);
 				message = "Хэрэглэгчийн " + message + "талбар"  + (message.split(",").length > 1 ? "уудын" : "ын") +  " утгыг бөглөнө үү.";
-				result.setResultMessage(message);
+				result.setMessage(message);
 				return result;
 			}
 			
 			Integer resultId = DBManager.insert("user.addUser", user);
 			if(resultId != null && resultId == 0) {
 				resultId = EResultId.valueOf(EResultId.Error.toString()).ordinal();
-				result.setResultMessage(SystemConst.ERROR_SAVING_DATA);
+				result.setMessage(SystemConst.ERROR_SAVING_DATA);
 			} 
 			else {
 				resultId = EResultId.valueOf(EResultId.Success.toString()).ordinal();
-				result.setResultMessage(SystemConst.SUCCESS_SAVING_DATA);
+				result.setMessage(SystemConst.SUCCESS_SAVING_DATA);
 			}
 			
-			result.setResultId(resultId);
-			result.setResultItem(user);
+			result.setId(resultId);
+			result.setItem(user);
 			return result;
 		} catch (Exception e) {
-			result.setResultId(EResultId.valueOf(EResultId.Error.toString()).ordinal());
-			result.setResultItem(user);
-			result.setResultMessage(SystemConst.ERROR_READ_DATA+e.getMessage());
+			result.setId(EResultId.valueOf(EResultId.Error.toString()).ordinal());
+			result.setItem(user);
+			result.setMessage(SystemConst.ERROR_READ_DATA+e.getMessage());
 			return result;
 		}
 	}
@@ -133,14 +135,14 @@ public class UserController {
 		Result result = new Result();
 		try {
 			DBManager.delete("user.deleteUser", name);
-			result.setResultItem("");
-			result.setResultId(EResultId.valueOf(EResultId.Success.toString()).ordinal());
-			result.setResultMessage(SystemConst.SUCCESS_DELETE_DATA);
+			result.setItem("");
+			result.setId(EResultId.valueOf(EResultId.Success.toString()).ordinal());
+			result.setMessage(SystemConst.SUCCESS_DELETE_DATA);
 			return result;
 		} catch (Exception e) {
-			result.setResultId(EResultId.valueOf(EResultId.Error.toString()).ordinal());
-			result.setResultItem("");
-			result.setResultMessage(SystemConst.ERROR_READ_DATA + e.getMessage());
+			result.setId(EResultId.valueOf(EResultId.Error.toString()).ordinal());
+			result.setItem("");
+			result.setMessage(SystemConst.ERROR_READ_DATA + e.getMessage());
 			return result;
 		}
 	}

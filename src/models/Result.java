@@ -1,27 +1,26 @@
 package models;
 
 public class Result {
-	private Integer resultId;
-	private String resultMessage;
-	private Object resultItem;
-	
-	public Integer getResultId() {
-		return resultId;
+	private Integer id;
+	private String message;
+	private Object item;
+	public Integer getId() {
+		return id;
 	}
-	public void setResultId(Integer resultId) {
-		this.resultId = resultId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
-	public String getResultMessage() {
-		return resultMessage;
+	public String getMessage() {
+		return message;
 	}
-	public void setResultMessage(String resultMessage) {
-		this.resultMessage = resultMessage;
+	public void setMessage(String message) {
+		this.message = message;
 	}
-	public Object getResultItem() {
-		return resultItem;
+	public Object getItem() {
+		return item;
 	}
-	public void setResultItem(Object resultItem) {
-		this.resultItem = resultItem;
+	public void setItem(Object item) {
+		this.item = item;
 	}
-		
+			
 }
