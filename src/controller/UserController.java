@@ -107,8 +107,8 @@ public class UserController {
 			
 			Integer resultId = DBManager.insert("user.addUser", user);
 			if(resultId != null && resultId == 0) {
-				resultId = EResultId.valueOf(EResultId.Error.toString()).ordinal();
-				result.setMessage(SystemConst.ERROR_SAVING_DATA);
+				resultId = EResultId.valueOf(EResultId.Warning.toString()).ordinal();
+				result.setMessage("Бүртгэгдсэн имэйл хаяг байна.");
 			} 
 			else {
 				resultId = EResultId.valueOf(EResultId.Success.toString()).ordinal();

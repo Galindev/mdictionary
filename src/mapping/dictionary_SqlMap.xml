@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="dictionary" >
+	<resultMap id="UserResult" class="models.Dictionary">
+		<result property="id" column="ID"/>
+		<result property="mon" column="MON"/>
+		<result property="eng" column="ENG"/>
+		<result property="descMon" column="DESCMON"/>
+		<result property="descEng" column="DESCENG"/>
+		<result property="createdUserId" column="CREATEDUSERID"/>
+		<result property="confirmedUserId" column="CONFIRMEDUSERID"/>
+		<result property="status" column="STATUS"/>
+	</resultMap>
+	
+	<select id="searchWordMon" resultClass="models.Dictionary" parameterClass="models.Dictionary">
+	 	select * from Dictionary WHERE UPPER(mon) = UPPER(#mon#)
+		UNION
+		select * from Dictionary WHERE UPPER(mon) like UPPER(#mon#) ||'%' 
+		UNION
+	 	select * from Dictionary WHERE UPPER(mon) like '%'|| UPPER(#mon#) ||'%' 
+	</select>
+	<select id="searchWordEng" resultClass="models.Dictionary" parameterClass="models.Dictionary">
+		select * from Dictionary WHERE UPPER(eng) = UPPER(#eng#)
+		UNION
+		select * from Dictionary WHERE UPPER(eng) like UPPER(#eng#) ||'%' 
+		UNION
+	 	select * from Dictionary WHERE UPPER(eng) like '%'|| UPPER(#eng#) ||'%'
+	</select>
+	<select id="getAll" resultClass="models.Dictionary">
+	 	select A.* from Dictionary A 
+	</select>
+	<statement id="addWord" parameterClass="models.Dictionary" resultClass="decimal">
+	 	insert into Dictionary (ENG, MON, DESCMON, DESCENG, CREATEDUSERID, CONFIRMEDUSERID, STATUS)
+		VALUES (#eng#, #mon#, #descMon#, #descEng#, #createdUserId#, #confirmedUserId#, #status#)
+	</statement>
+	<delete id="deleteWord" parameterClass="int" >
+		DELETE FROM Dictionary WHERE Id = #id#
+	</delete>
+	<update id="updateWord" parameterClass="models.Dictionary" >
+		UPDATE Dictionary SET mon = #mon#, eng = #eng#, descmon = #descMon#, desceng = #descEng#, 
+			Status = #status#, CONFIRMEDUSERID = #confirmedUserId# WHERE ID = #id#
+	</update>
+</sqlMap>
