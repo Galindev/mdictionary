@@ -8,7 +8,7 @@ public class Dictionary {
 	private String descEng;
 	private int createdUserId;
 	private int ConfirmedUserId;
-	private String status;
+	private int status;
 	
 	public int getId() {
 		return id;
@@ -52,10 +52,10 @@ public class Dictionary {
 	public void setConfirmedUserId(int confirmedUserId) {
 		ConfirmedUserId = confirmedUserId;
 	}
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 	

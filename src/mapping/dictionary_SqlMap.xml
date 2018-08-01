@@ -14,21 +14,21 @@
 	</resultMap>
 	
 	<select id="searchWordMon" resultClass="models.Dictionary" parameterClass="models.Dictionary">
-	 	select * from Dictionary WHERE UPPER(mon) = UPPER(#mon#)
+	 	select * from Dictionary WHERE (Status = #status# OR #status# = 0) AND UPPER(mon) = UPPER(#mon#)
 		UNION
-		select * from Dictionary WHERE UPPER(mon) like UPPER(#mon#) ||'%' 
+		select * from Dictionary WHERE (Status = #status# OR #status# = 0) AND UPPER(mon) like UPPER(#mon#) ||'%' 
 		UNION
-	 	select * from Dictionary WHERE UPPER(mon) like '%'|| UPPER(#mon#) ||'%' 
+	 	select * from Dictionary WHERE (Status = #status# OR #status# = 0) AND UPPER(mon) like '%'|| UPPER(#mon#) ||'%' 
 	</select>
 	<select id="searchWordEng" resultClass="models.Dictionary" parameterClass="models.Dictionary">
-		select * from Dictionary WHERE UPPER(eng) = UPPER(#eng#)
+		select * from Dictionary WHERE (Status = #status# OR #status# = 0) AND UPPER(eng) = UPPER(#eng#)
 		UNION
-		select * from Dictionary WHERE UPPER(eng) like UPPER(#eng#) ||'%' 
+		select * from Dictionary WHERE (Status = #status# OR #status# = 0) AND UPPER(eng) like UPPER(#eng#) ||'%' 
 		UNION
-	 	select * from Dictionary WHERE UPPER(eng) like '%'|| UPPER(#eng#) ||'%'
+	 	select * from Dictionary WHERE (Status = #status# OR #status# = 0) AND UPPER(eng) like '%'|| UPPER(#eng#) ||'%'
 	</select>
-	<select id="getAll" resultClass="models.Dictionary">
-	 	select A.* from Dictionary A 
+	<select id="getAll" resultClass="models.Dictionary" parameterClass="int">
+	 	select A.* from Dictionary A WHERE A.STATUS = #status# OR #status# = 0
 	</select>
 	<statement id="addWord" parameterClass="models.Dictionary" resultClass="decimal">
 	 	insert into Dictionary (ENG, MON, DESCMON, DESCENG, CREATEDUSERID, CONFIRMEDUSERID, STATUS)
@@ -40,5 +40,8 @@
 	<update id="updateWord" parameterClass="models.Dictionary" >
 		UPDATE Dictionary SET mon = #mon#, eng = #eng#, descmon = #descMon#, desceng = #descEng#, 
 			Status = #status#, CONFIRMEDUSERID = #confirmedUserId# WHERE ID = #id#
+	</update>
+	<update id="confirmWord" parameterClass="int" >
+		UPDATE Dictionary SET Status = 1 WHERE ID = #id#
 	</update>
 </sqlMap>

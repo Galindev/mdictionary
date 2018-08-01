@@ -1,13 +1,23 @@
 package controller;
 
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 
 import org.springframework.web.bind.annotation.RestController;
 
 import base.base;
 import dao.DBManager;
+import models.Dictionary;
 import models.Employee;
 import models.Result;
 import models.User;
@@ -54,4 +64,30 @@ public class EmployeeController {
 		return emps;
 	}
 	
+	@RequestMapping(value = "/testFunction", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	private void testFunction() throws IOException, JAXBException
+	{
+		System.out.println("Ehellee");
+		String uri = "http://172.18.1.28:8080/TestM/searchWordMon";
+			URL url = new URL(uri);
+			HttpURLConnection connection = 
+			    (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("GET");
+			connection.setRequestProperty("Content-type", MediaType.APPLICATION_JSON_UTF8_VALUE);
+			connection.setRequestProperty("word", "Морь");
+			
+			JAXBContext jc = JAXBContext.newInstance(Result.class);
+			InputStream xml = connection.getInputStream();
+			Result res = 
+			    (Result) jc.createUnmarshaller().unmarshal(xml);
+			if(res != null){
+				List<Dictionary> dic = (List<Dictionary>)res.getItem();
+				System.out.println(dic.get(0).getDescEng());
+			}
+			else {
+				System.out.println("Null irsen bna");
+			}
+			 
+			connection.disconnect();
+	}
 }
